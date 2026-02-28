@@ -14,7 +14,6 @@
 --text:#e8f1ff;
 }
 
-*{box-sizing:border-box}
 body{
 margin:0;
 font-family:system-ui,-apple-system,Segoe UI,Roboto;
@@ -26,14 +25,9 @@ header{
 padding:18px 22px;
 display:flex;
 justify-content:space-between;
-align-items:center;
 background:rgba(15,31,46,.7);
 backdrop-filter:blur(8px);
-border-bottom:1px solid rgba(255,255,255,.05);
 }
-
-h1{font-size:18px;margin:0}
-h2{margin-top:0}
 
 .container{
 padding:22px;
@@ -44,56 +38,45 @@ margin:auto;
 
 .cards{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-gap:16px;
-margin-top:12px;
+grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+gap:14px;
 }
 
 .card{
 background:linear-gradient(145deg,#1db954,#178a6a);
 border-radius:18px;
-padding:20px;
-box-shadow:0 10px 30px rgba(0,0,0,.35);
-transition:.3s;
+padding:18px;
+box-shadow:0 10px 25px rgba(0,0,0,.35);
 }
-.card:hover{transform:translateY(-4px)}
 
 .panel{
 background:var(--card);
 padding:18px;
 border-radius:18px;
 margin-top:18px;
-box-shadow:0 10px 30px rgba(0,0,0,.25);
+box-shadow:0 10px 25px rgba(0,0,0,.25);
 }
 
 .progress{
-height:12px;
-background:#0a1a29;
+height:14px;
+background:#08131f;
 border-radius:20px;
 overflow:hidden;
-margin:10px 0 16px;
+margin:10px 0 6px;
+position:relative;
 }
+
 .bar{
 height:100%;
 border-radius:20px;
 transition:1s;
-}
-
-select{
-width:100%;
-padding:12px;
-border-radius:12px;
-background:var(--soft);
-border:none;
-color:white;
-margin-top:8px;
-}
-
-.plantInfo{
-background:var(--soft);
-padding:14px;
-border-radius:14px;
-margin-top:10px;
+display:flex;
+align-items:center;
+justify-content:flex-end;
+padding-right:8px;
+font-size:11px;
+font-weight:bold;
+color:#042;
 }
 
 .tabs{
@@ -101,8 +84,7 @@ position:fixed;
 bottom:0;
 left:0;
 right:0;
-background:rgba(10,22,34,.9);
-backdrop-filter:blur(10px);
+background:rgba(10,22,34,.95);
 display:flex;
 justify-content:space-around;
 padding:14px 0;
@@ -114,20 +96,47 @@ color:#6f8ca8;
 cursor:pointer;
 font-size:13px;
 text-align:center;
-transition:.2s;
 }
-.tab.active{color:var(--accent);transform:scale(1.1)}
+.tab.active{color:var(--accent)}
 
 .screen{display:none}
 .screen.active{display:block}
 
-.badge{
-display:inline-block;
-padding:3px 8px;
+.plantGrid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+gap:12px;
+margin-top:10px;
+}
+
+.plantCard{
+background:var(--soft);
+padding:12px;
+border-radius:14px;
+text-align:center;
+cursor:pointer;
+transition:.2s;
+border:2px solid transparent;
+}
+.plantCard:hover{transform:translateY(-3px)}
+.plantCard.active{border:2px solid var(--accent)}
+
+.setting{
+background:var(--soft);
+padding:14px;
+border-radius:14px;
+margin-top:10px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+button{
+background:var(--accent);
+border:none;
+padding:6px 12px;
 border-radius:8px;
-background:rgba(255,255,255,.08);
-font-size:11px;
-margin-left:6px;
+cursor:pointer;
 }
 </style>
 </head>
@@ -135,31 +144,23 @@ margin-left:6px;
 <body>
 
 <header>
-<h1>🌿 GreenMind</h1>
+<b>🌿 GreenMind</b>
 <div style="color:var(--accent)">● Online</div>
 </header>
 
 <div class="container">
 
-<!-- HORTA -->
+<!-- MONITORAMENTO -->
 <div id="horta" class="screen active">
-
 <h2>Monitoramento</h2>
 
 <div class="cards">
-<div class="card">
-<div style="font-size:28px;font-weight:700" id="umidadeMedia">72%</div>
-Umidade média
-</div>
-
-<div class="card">
-<div style="font-size:28px;font-weight:700">2.3L</div>
-Economia hoje
-</div>
+<div class="card"><h2 id="umidadeMedia">72%</h2>Umidade média</div>
+<div class="card"><h2>2.3L</h2>Economia hoje</div>
 </div>
 
 <div class="panel">
-<h3>Status das Plantas</h3>
+<h3>Status das plantas</h3>
 
 <div id="nomeEsq"></div>
 <div class="progress"><div id="barraEsq" class="bar"></div></div>
@@ -170,55 +171,65 @@ Economia hoje
 </div>
 </div>
 
-<!-- PLANTAS -->
+<!-- CONFIGURAR HORTA -->
 <div id="plantas" class="screen">
-
-<h2>Configurar Horta</h2>
+<h2>Configurar horta</h2>
 
 <h3>Lado esquerdo</h3>
-<select id="plantaEsq" onchange="atualizar()">
-<option value="tomate">Tomate</option>
-<option value="cenoura">Cenoura</option>
-<option value="alface">Alface</option>
-<option value="manjericao">Manjericão</option>
-</select>
-<div id="infoEsq" class="plantInfo"></div>
+<div class="plantGrid" id="gridEsq"></div>
 
-<h3 style="margin-top:22px">Lado direito</h3>
-<select id="plantaDir" onchange="atualizar()">
-<option value="cenoura">Cenoura</option>
-<option value="tomate">Tomate</option>
-<option value="alface">Alface</option>
-<option value="manjericao">Manjericão</option>
-</select>
-<div id="infoDir" class="plantInfo"></div>
+<h3 style="margin-top:20px">Lado direito</h3>
+<div class="plantGrid" id="gridDir"></div>
 
-</div>
-
-<!-- DIAGNOSTICO -->
-<div id="diagnostico" class="screen">
-<h2>Sistema</h2>
-<div class="panel">Sensores funcionando normalmente ✔️</div>
 </div>
 
 <!-- ECONOMIA -->
 <div id="economia" class="screen">
-<h2>Economia</h2>
-<div class="panel">Total economizado: <b>387L</b></div>
+<h2>Economia de água</h2>
+
+<div class="cards">
+<div class="card"><h2>2.3L</h2>Hoje</div>
+<div class="card"><h2>15.7L</h2>Semana</div>
+<div class="card" style="background:#ff9d2b"><h2>64.2L</h2>Mês</div>
+<div class="card" style="background:#7c4dff"><h2>387L</h2>Total</div>
+</div>
+
+<div class="panel">
+Economia estimada baseada nas plantas selecionadas e irrigação automática.
+</div>
 </div>
 
 <!-- CONFIG -->
 <div id="config" class="screen">
-<h2>Ajustes</h2>
-<div class="panel">Versão web do sistema GreenMind</div>
+<h2>Configurações</h2>
+
+<div class="setting">
+<span>Conta conectada</span>
+<button>Gerenciar</button>
+</div>
+
+<div class="setting">
+<span>Notificações</span>
+<button>Ativar</button>
+</div>
+
+<div class="setting">
+<span>Modo escuro</span>
+<button onclick="toggleDark()">Alternar</button>
+</div>
+
+<div class="setting">
+<span>Resetar horta</span>
+<button onclick="resetar()">Reset</button>
+</div>
+
 </div>
 
 </div>
 
 <div class="tabs">
 <div class="tab active" onclick="trocar('horta',this)">Horta</div>
-<div class="tab" onclick="trocar('plantas',this)">Plantas</div>
-<div class="tab" onclick="trocar('diagnostico',this)">Sistema</div>
+<div class="tab" onclick="trocar('plantas',this)">Horta</div>
 <div class="tab" onclick="trocar('economia',this)">Economia</div>
 <div class="tab" onclick="trocar('config',this)">Config</div>
 </div>
@@ -232,32 +243,79 @@ el.classList.add('active')
 }
 
 const plantas={
-tomate:{emoji:"🍅",nome:"Tomate",desc:"Sol pleno • Irrigação moderada",umidade:70,cor:"#3ee17f"},
-cenoura:{emoji:"🥕",nome:"Cenoura",desc:"Solo leve • Rega frequente",umidade:60,cor:"#52d97f"},
-alface:{emoji:"🥬",nome:"Alface",desc:"Solo úmido constante",umidade:80,cor:"#77f7aa"},
-manjericao:{emoji:"🌿",nome:"Manjericão",desc:"Clima quente • Rega média",umidade:65,cor:"#2bd97f"}
+tomate:{emoji:"🍅",nome:"Tomate",umidade:70,cor:"#3ee17f"},
+cenoura:{emoji:"🥕",nome:"Cenoura",umidade:60,cor:"#52d97f"},
+alface:{emoji:"🥬",nome:"Alface",umidade:80,cor:"#77f7aa"},
+manjericao:{emoji:"🌿",nome:"Manjericão",umidade:65,cor:"#2bd97f"}
+}
+
+let esq="tomate"
+let dir="cenoura"
+
+function montarCards(){
+for(const id in plantas){
+
+const p=plantas[id]
+
+gridEsq.innerHTML+=`
+<div class="plantCard ${id==esq?'active':''}" onclick="esq='${id}';atualizar();selecionar()">
+<div style="font-size:28px">${p.emoji}</div>${p.nome}
+</div>`
+
+gridDir.innerHTML+=`
+<div class="plantCard ${id==dir?'active':''}" onclick="dir='${id}';atualizar();selecionar()">
+<div style="font-size:28px">${p.emoji}</div>${p.nome}
+</div>`
+}
+}
+
+function selecionar(){
+document.querySelectorAll('#gridEsq .plantCard').forEach((c,i)=>{
+c.classList.toggle('active',Object.keys(plantas)[i]==esq)
+})
+document.querySelectorAll('#gridDir .plantCard').forEach((c,i)=>{
+c.classList.toggle('active',Object.keys(plantas)[i]==dir)
+})
 }
 
 function atualizar(){
 
-const esq=plantas[plantaEsq.value]
-const dir=plantas[plantaDir.value]
+const p1=plantas[esq]
+const p2=plantas[dir]
 
-infoEsq.innerHTML=`<b>${esq.emoji} ${esq.nome}</b><div class="badge">${esq.umidade}% ideal</div><p>${esq.desc}</p>`
-infoDir.innerHTML=`<b>${dir.emoji} ${dir.nome}</b><div class="badge">${dir.umidade}% ideal</div><p>${dir.desc}</p>`
+nomeEsq.innerText=`${p1.emoji} Lado esquerdo — ${p1.nome}`
+nomeDir.innerText=`${p2.emoji} Lado direito — ${p2.nome}`
 
-nomeEsq.innerText=`${esq.emoji} Lado esquerdo — ${esq.nome}`
-nomeDir.innerText=`${dir.emoji} Lado direito — ${dir.nome}`
+barraEsq.style.width=p1.umidade+"%"
+barraDir.style.width=p2.umidade+"%"
+barraEsq.style.background=p1.cor
+barraDir.style.background=p2.cor
+barraEsq.innerText=p1.umidade+"%"
+barraDir.innerText=p2.umidade+"%"
 
-barraEsq.style.width=esq.umidade+"%"
-barraDir.style.width=dir.umidade+"%"
-barraEsq.style.background=esq.cor
-barraDir.style.background=dir.cor
-
-const media=Math.round((esq.umidade+dir.umidade)/2)
+const media=Math.round((p1.umidade+p2.umidade)/2)
 umidadeMedia.innerText=media+"%"
 }
 
+function toggleDark(){
+document.body.classList.toggle("light")
+if(document.body.classList.contains("light")){
+document.body.style.background="#f4f7fb"
+document.body.style.color="#111"
+}else{
+document.body.style.background="linear-gradient(180deg,#0b1622,#08101a)"
+document.body.style.color="#e8f1ff"
+}
+}
+
+function resetar(){
+esq="tomate"
+dir="cenoura"
+atualizar()
+selecionar()
+}
+
+montarCards()
 atualizar()
 </script>
 
