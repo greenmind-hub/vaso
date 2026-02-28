@@ -6,198 +6,148 @@
 <title>GreenMind</title>
 
 <style>
-body{
-  margin:0;
-  font-family:system-ui, sans-serif;
-  background:#0b1622;
-  color:white;
-}
-
-header{
-  display:flex;
-  justify-content:space-between;
-  padding:18px;
-  background:#0f1f2e;
-  font-weight:600;
-}
-
-.container{ padding:20px; }
-
-.cards{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:15px;
-}
-
-.card{
-  padding:25px;
-  border-radius:18px;
-  text-align:center;
-  background:linear-gradient(135deg,#1db954,#1f8f6a);
-}
-
-.panel{
-  margin-top:20px;
-  padding:20px;
-  background:#142434;
-  border-radius:18px;
-}
-
-.progress{
-  height:10px;
-  background:#2a3c4f;
-  border-radius:10px;
-  margin:12px 0;
-}
-
-.bar{
-  height:100%;
-  width:71%;
-  background:#3ee17f;
-  border-radius:10px;
-}
-
-.tabs{
-  position:fixed;
-  bottom:0;
-  width:100%;
-  background:#0f1f2e;
-  display:flex;
-  justify-content:space-around;
-  padding:12px 0;
-}
-
-.tab{
-  color:#7fa3c6;
-  cursor:pointer;
-  font-size:14px;
-}
-
-.tab.active{ color:#3ee17f; }
-
-.screen{ display:none; }
-.screen.active{ display:block; }
-
-.plant{
-  display:flex;
-  gap:15px;
-  background:#142434;
-  padding:15px;
-  border-radius:15px;
-  margin-bottom:15px;
-}
-
-.badge{
-  background:#ff9d2b;
-  padding:4px 8px;
-  border-radius:8px;
-  font-size:12px;
-}
+body{margin:0;font-family:system-ui;background:#0b1622;color:white}
+header{display:flex;justify-content:space-between;padding:18px;background:#0f1f2e}
+.container{padding:20px;padding-bottom:90px}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.card{padding:25px;border-radius:18px;text-align:center;background:linear-gradient(135deg,#1db954,#1f8f6a)}
+.panel{margin-top:20px;padding:20px;background:#142434;border-radius:18px}
+.progress{height:10px;background:#2a3c4f;border-radius:10px;margin:10px 0}
+.bar{height:100%;border-radius:10px}
+.tabs{position:fixed;bottom:0;width:100%;background:#0f1f2e;display:flex;justify-content:space-around;padding:12px 0}
+.tab{color:#7fa3c6;cursor:pointer;font-size:14px}
+.tab.active{color:#3ee17f}
+.screen{display:none}
+.screen.active{display:block}
+select{width:100%;padding:10px;border-radius:10px;margin:8px 0;background:#142434;color:white;border:none}
+.plant{background:#142434;padding:15px;border-radius:15px;margin-top:10px}
 </style>
 </head>
 
 <body>
 
 <header>
-  <div>🌿 GreenMind</div>
-  <div style="color:#3ee17f">● Conectado</div>
+<div>🌿 GreenMind</div>
+<div style="color:#3ee17f">● Conectado</div>
 </header>
 
 <div class="container">
 
 <!-- HORTA -->
 <div id="horta" class="screen active">
-  <h2>Monitoramento da Horta</h2>
+<h2>Monitoramento da Horta</h2>
 
-  <div class="cards">
-    <div class="card">
-      <h2>2.3L</h2>
-      Economia Hoje
-    </div>
-    <div class="card">
-      <h2>72%</h2>
-      Umidade Média
-    </div>
-  </div>
+<div class="cards">
+<div class="card"><h2 id="aguaHoje">2.3L</h2>Economia Hoje</div>
+<div class="card"><h2 id="umidadeMedia">72%</h2>Umidade Média</div>
+</div>
 
-  <div class="panel">
-    <h3>Status da Horta</h3>
-    <p>🍅 Lado Esquerdo — Tomate</p>
-    <div class="progress"><div class="bar"></div></div>
-    <small>71% Ideal</small>
-  </div>
+<div class="panel">
+<h3>Status da Horta</h3>
+
+<p id="nomeEsq"></p>
+<div class="progress"><div id="barraEsq" class="bar"></div></div>
+
+<p id="nomeDir"></p>
+<div class="progress"><div id="barraDir" class="bar"></div></div>
+</div>
 </div>
 
 <!-- PLANTAS -->
 <div id="plantas" class="screen">
-  <h2>Seleção de Plantas</h2>
+<h2>Seleção de Plantas</h2>
 
-  <div class="plant">
-    <div>🍅</div>
-    <div>
-      <b>Tomate</b> <span class="badge">Médio</span>
-      <p>Rico em vitaminas, ideal para saladas.</p>
-      <small>Sol pleno • Crescimento 70-80 dias</small>
-    </div>
-  </div>
+<h3>Lado Esquerdo</h3>
+<select id="plantaEsq" onchange="atualizarHorta()">
+<option value="tomate">Tomate</option>
+<option value="cenoura">Cenoura</option>
+<option value="alface">Alface</option>
+<option value="manjericao">Manjericão</option>
+</select>
+<div id="infoEsq" class="plant"></div>
 
-  <div class="plant">
-    <div>🥕</div>
-    <div>
-      <b>Cenoura</b> <span class="badge">Médio</span>
-      <p>Rica em betacaroteno.</p>
-      <small>Sol pleno • Crescimento 60-75 dias</small>
-    </div>
-  </div>
+<h3 style="margin-top:20px">Lado Direito</h3>
+<select id="plantaDir" onchange="atualizarHorta()">
+<option value="cenoura">Cenoura</option>
+<option value="tomate">Tomate</option>
+<option value="alface">Alface</option>
+<option value="manjericao">Manjericão</option>
+</select>
+<div id="infoDir" class="plant"></div>
+
 </div>
 
 <!-- DIAGNOSTICO -->
 <div id="diagnostico" class="screen">
-  <h2>Diagnóstico</h2>
-  <div class="panel">
-    Sensores funcionando normalmente ✔️
-  </div>
+<h2>Diagnóstico</h2>
+<div class="panel">Sensores OK ✔️</div>
 </div>
 
 <!-- ECONOMIA -->
 <div id="economia" class="screen">
-  <h2>Economia de Água</h2>
-
-  <div class="cards">
-    <div class="card">2.3L<br>Hoje</div>
-    <div class="card">15.7L<br>Semana</div>
-    <div class="card" style="background:#ff9d2b">64.2L<br>Mês</div>
-    <div class="card" style="background:#7c4dff">387.5L<br>Total</div>
-  </div>
+<h2>Economia de Água</h2>
+<div class="cards">
+<div class="card">2.3L<br>Hoje</div>
+<div class="card">15.7L<br>Semana</div>
+<div class="card" style="background:#ff9d2b">64.2L<br>Mês</div>
+<div class="card" style="background:#7c4dff">387.5L<br>Total</div>
+</div>
 </div>
 
 <!-- CONFIG -->
 <div id="config" class="screen">
-  <h2>Configurações</h2>
-  <div class="panel">
-    <p>🌱 Nome da Horta: Minha Horta</p>
-    <p>💧 Notificações: Ativas</p>
-  </div>
+<h2>Configurações</h2>
+<div class="panel">Sistema ativo</div>
 </div>
 
 </div>
 
 <!-- MENU -->
 <div class="tabs">
-  <div class="tab active" onclick="trocar('horta',this)">Horta</div>
-  <div class="tab" onclick="trocar('plantas',this)">Plantas</div>
-  <div class="tab" onclick="trocar('diagnostico',this)">Diagnóstico</div>
-  <div class="tab" onclick="trocar('economia',this)">Economia</div>
-  <div class="tab" onclick="trocar('config',this)">Config</div>
+<div class="tab active" onclick="trocar('horta',this)">Horta</div>
+<div class="tab" onclick="trocar('plantas',this)">Plantas</div>
+<div class="tab" onclick="trocar('diagnostico',this)">Diagnóstico</div>
+<div class="tab" onclick="trocar('economia',this)">Economia</div>
+<div class="tab" onclick="trocar('config',this)">Config</div>
 </div>
 
 <script>
 function trocar(id,el){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'))
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'))
-  document.getElementById(id).classList.add('active')
-  el.classList.add('active')
+document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'))
+document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'))
+document.getElementById(id).classList.add('active')
+el.classList.add('active')
 }
+
+const plantas={
+tomate:{emoji:"🍅",nome:"Tomate",desc:"Precisa de sol e irrigação moderada.",umidade:70,cor:"#3ee17f"},
+cenoura:{emoji:"🥕",nome:"Cenoura",desc:"Solo leve e irrigação frequente.",umidade:60,cor:"#4cd964"},
+alface:{emoji:"🥬",nome:"Alface",desc:"Solo sempre úmido.",umidade:80,cor:"#6ef7a2"},
+manjericao:{emoji:"🌿",nome:"Manjericão",desc:"Calor e rega moderada.",umidade:65,cor:"#2bd97f"}
+}
+
+function atualizarHorta(){
+
+const esq=plantas[plantaEsq.value]
+const dir=plantas[plantaDir.value]
+
+infoEsq.innerHTML=`<b>${esq.emoji} ${esq.nome}</b><p>${esq.desc}</p>`
+infoDir.innerHTML=`<b>${dir.emoji} ${dir.nome}</b><p>${dir.desc}</p>`
+
+nomeEsq.innerText=`${esq.emoji} Lado Esquerdo — ${esq.nome} (${esq.umidade}%)`
+nomeDir.innerText=`${dir.emoji} Lado Direito — ${dir.nome} (${dir.umidade}%)`
+
+barraEsq.style.width=esq.umidade+"%"
+barraEsq.style.background=esq.cor
+
+barraDir.style.width=dir.umidade+"%"
+barraDir.style.background=dir.cor
+
+const media=Math.round((esq.umidade+dir.umidade)/2)
+umidadeMedia.innerText=media+"%"
+}
+
+atualizarHorta()
 </script>
 
 </body>
