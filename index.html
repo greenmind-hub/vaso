@@ -71,7 +71,6 @@ border-radius:20px;
 overflow:hidden;
 margin:10px 0 6px;
 }
-
 body.light .progress{background:#dde6f2}
 
 .bar{
@@ -97,11 +96,7 @@ justify-content:space-around;
 padding:14px 0;
 }
 
-.tab{
-color:#6f8ca8;
-cursor:pointer;
-font-size:13px;
-}
+.tab{cursor:pointer;font-size:13px;color:#6f8ca8}
 .tab.active{color:var(--accent)}
 
 .screen{display:none}
@@ -121,6 +116,7 @@ border-radius:14px;
 text-align:center;
 cursor:pointer;
 border:2px solid transparent;
+transition:.2s;
 }
 .plantCard.active{border:2px solid var(--accent)}
 
@@ -158,9 +154,9 @@ color:white;
 <h2>Monitoramento</h2>
 
 <div class="cards">
-<div class="card"><h2 id="umidadeMedia">72%</h2>Umidade média</div>
-<div class="card"><h2 id="tempDia">26°C</h2>Temperatura</div>
-<div class="card"><h2 id="luzDia">8h</h2>Luz solar</div>
+<div class="card"><h2 id="umidadeMedia"></h2>Umidade média</div>
+<div class="card"><h2 id="tempDia"></h2>Temperatura</div>
+<div class="card"><h2 id="luzDia"></h2>Luz solar</div>
 </div>
 
 <div class="panel">
@@ -184,7 +180,6 @@ color:white;
 
 <h3 style="margin-top:20px">Lado direito</h3>
 <div class="plantGrid" id="gridDir"></div>
-
 </div>
 
 <!-- ECONOMIA -->
@@ -208,11 +203,6 @@ Economia baseada nas plantas e irrigação automática simulada.
 <h2>Configurações</h2>
 
 <div class="setting">
-<span>Conta</span>
-<button>Gerenciar</button>
-</div>
-
-<div class="setting">
 <span>Modo claro/escuro</span>
 <button onclick="toggleDark()">Alternar</button>
 </div>
@@ -228,7 +218,7 @@ Economia baseada nas plantas e irrigação automática simulada.
 
 <div class="tabs">
 <div class="tab active" onclick="trocar('horta',this)">Horta</div>
-<div class="tab" onclick="trocar('plantas',this)">Horta</div>
+<div class="tab" onclick="trocar('plantas',this)">Plantas</div>
 <div class="tab" onclick="trocar('economia',this)">Economia</div>
 <div class="tab" onclick="trocar('config',this)">Config</div>
 </div>
@@ -251,17 +241,27 @@ manjericao:{emoji:"🌿",nome:"Manjericão",umidade:65,cor:"#2bd97f"}
 let esq="tomate"
 let dir="cenoura"
 
-function montarCards(){
+function criarGrid(grid,lado){
+grid.innerHTML=""
 for(const id in plantas){
 const p=plantas[id]
-gridEsq.innerHTML+=`<div class="plantCard" onclick="esq='${id}';atualizar();selecionar()"><div style="font-size:28px">${p.emoji}</div>${p.nome}</div>`
-gridDir.innerHTML+=`<div class="plantCard" onclick="dir='${id}';atualizar();selecionar()"><div style="font-size:28px">${p.emoji}</div>${p.nome}</div>`
+const div=document.createElement("div")
+div.className="plantCard"
+div.innerHTML=`<div style="font-size:28px">${p.emoji}</div>${p.nome}`
+div.onclick=()=>{
+if(lado==="esq") esq=id
+else dir=id
+atualizar()
+render()
+}
+if((lado==="esq"&&id===esq)||(lado==="dir"&&id===dir))div.classList.add("active")
+grid.appendChild(div)
 }
 }
 
-function selecionar(){
-document.querySelectorAll('#gridEsq .plantCard').forEach((c,i)=>c.classList.toggle('active',Object.keys(plantas)[i]==esq))
-document.querySelectorAll('#gridDir .plantCard').forEach((c,i)=>c.classList.toggle('active',Object.keys(plantas)[i]==dir))
+function render(){
+criarGrid(gridEsq,"esq")
+criarGrid(gridDir,"dir")
 }
 
 function atualizar(){
@@ -278,10 +278,7 @@ barraDir.style.background=p2.cor
 barraEsq.innerText=p1.umidade+"%"
 barraDir.innerText=p2.umidade+"%"
 
-const media=Math.round((p1.umidade+p2.umidade)/2)
-umidadeMedia.innerText=media+"%"
-
-// valores simulados de ambiente
+umidadeMedia.innerText=Math.round((p1.umidade+p2.umidade)/2)+"%"
 tempDia.innerText=(24+Math.floor(Math.random()*5))+"°C"
 luzDia.innerText=(6+Math.floor(Math.random()*4))+"h"
 }
@@ -294,12 +291,11 @@ function resetar(){
 esq="tomate"
 dir="cenoura"
 atualizar()
-selecionar()
+render()
 }
 
-montarCards()
+render()
 atualizar()
-selecionar()
 </script>
 
 </body>
