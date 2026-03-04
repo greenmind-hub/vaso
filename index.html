@@ -5,10 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GreenMind</title>
 
-<!-- Tailwind CDN -->
 <script src="https://cdn.tailwindcss.com"></script>
-
-<!-- Google Font -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
 <script>
@@ -16,9 +13,10 @@ tailwind.config = {
   theme: {
     extend: {
       colors: {
-        primary: "#10B981",
-        darkbg: "#121826",
-        cardbg: "#1F2937"
+        bgmain:"#0F172A",
+        card:"#1E293B",
+        green:"#22C55E",
+        accent:"#10B981"
       }
     }
   }
@@ -26,114 +24,161 @@ tailwind.config = {
 </script>
 
 <style>
-body { font-family: 'Inter', sans-serif; }
-.tab { display:none; }
-.tab.active { display:block; }
+body{font-family:'Inter',sans-serif;}
+.tab{display:none;}
+.tab.active{display:block;}
 </style>
 </head>
 
-<body class="bg-darkbg text-white min-h-screen pb-24">
+<body class="bg-bgmain text-white min-h-screen pb-24">
 
-<!-- CONTAINER -->
-<div class="max-w-md mx-auto p-4">
+<div class="max-w-md mx-auto p-4 space-y-6">
 
-<!-- ========================= -->
-<!-- 🌿 HORTA (DASHBOARD) -->
-<!-- ========================= -->
-<div id="home" class="tab active space-y-4">
-
-<h1 class="text-2xl font-bold">🌱 GreenMind</h1>
-
-<div class="grid grid-cols-2 gap-3">
-  <div class="bg-cardbg p-4 rounded-2xl shadow">
-    <p class="text-sm text-gray-400">Economia Hoje</p>
-    <p id="economiaHoje" class="text-xl font-bold text-primary">32L</p>
-  </div>
-
-  <div class="bg-cardbg p-4 rounded-2xl shadow">
-    <p class="text-sm text-gray-400">Umidade Média</p>
-    <p id="umidadeMedia" class="text-xl font-bold text-primary">68%</p>
-  </div>
+<!-- HEADER -->
+<div class="flex items-center gap-3">
+<div class="bg-green p-2 rounded-xl">🌿</div>
+<h1 class="text-xl font-bold text-green">GreenMind</h1>
 </div>
 
-<div id="sensores" class="space-y-4"></div>
+<!-- ================= ECONOMIA ================= -->
+<div id="economia" class="tab active space-y-6">
 
-<button onclick="atualizarSensores()" class="w-full bg-primary text-black font-semibold py-3 rounded-2xl">
-Atualizar Sensores
-</button>
+<h2 class="text-2xl font-bold">Economia de Água</h2>
+<p class="text-gray-400">Acompanhe seu impacto sustentável</p>
 
+<div class="grid grid-cols-2 gap-4">
+
+<div class="bg-green p-5 rounded-2xl">
+<p class="text-2xl font-bold">2.3L</p>
+<p>Hoje</p>
 </div>
 
-<!-- ========================= -->
-<!-- 🌿 PLANTAS -->
-<!-- ========================= -->
-<div id="plantas" class="tab space-y-4">
-
-<h1 class="text-2xl font-bold">🌿 Biblioteca</h1>
-
-<div id="gridPlantas" class="grid grid-cols-2 gap-3"></div>
-
+<div class="bg-emerald-500 p-5 rounded-2xl">
+<p class="text-2xl font-bold">15.7L</p>
+<p>Esta Semana</p>
 </div>
 
-<!-- ========================= -->
-<!-- 💧 ECONOMIA -->
-<!-- ========================= -->
-<div id="economia" class="tab space-y-4">
-
-<h1 class="text-2xl font-bold">💧 Sustentabilidade</h1>
-
-<div class="bg-cardbg p-4 rounded-2xl">
-<canvas id="grafico" height="150"></canvas>
+<div class="bg-orange-500 p-5 rounded-2xl">
+<p class="text-2xl font-bold">64.2L</p>
+<p>Este Mês</p>
 </div>
 
-<div class="grid grid-cols-2 gap-3">
-  <div class="bg-cardbg p-4 rounded-2xl">
-    <p class="text-sm text-gray-400">CO₂ evitado</p>
-    <p class="text-lg font-bold text-primary">12kg</p>
-  </div>
-  <div class="bg-cardbg p-4 rounded-2xl">
-    <p class="text-sm text-gray-400">Horas torneira fechada</p>
-    <p class="text-lg font-bold text-primary">18h</p>
-  </div>
-</div>
-
-<div class="bg-cardbg p-4 rounded-2xl">
-<h2 class="font-semibold mb-2">🏅 Conquistas</h2>
-<div>
-<p class="text-sm">Eco Guerreiro (100L)</p>
-<div class="w-full bg-gray-700 rounded-full h-2 mt-1">
-<div class="bg-primary h-2 rounded-full" style="width:65%"></div>
-</div>
-</div>
+<div class="bg-purple-600 p-5 rounded-2xl">
+<p class="text-2xl font-bold">387.5L</p>
+<p>Total</p>
 </div>
 
 </div>
 
-<!-- ========================= -->
-<!-- ⚙️ CONFIG -->
-<!-- ========================= -->
-<div id="config" class="tab space-y-4">
+<!-- GRAFICO -->
+<div class="bg-card p-4 rounded-2xl">
+<h3 class="font-semibold mb-4">Economia Semanal</h3>
+<div class="flex justify-between items-end h-40">
+<div class="bg-green w-6 h-20 rounded"></div>
+<div class="bg-green w-6 h-28 rounded"></div>
+<div class="bg-green w-6 h-32 rounded"></div>
+<div class="bg-green w-6 h-24 rounded"></div>
+<div class="bg-green w-6 h-36 rounded"></div>
+<div class="bg-green w-6 h-30 rounded"></div>
+<div class="bg-green w-6 h-22 rounded"></div>
+</div>
+</div>
 
-<h1 class="text-2xl font-bold">⚙️ Configurações</h1>
+<!-- IMPACTO -->
+<div class="bg-card p-4 rounded-2xl space-y-4">
+<h3 class="font-semibold">Impacto Ambiental</h3>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-bgmain p-4 rounded-xl text-center">
+<p class="text-lg font-bold text-green">116.3kg</p>
+<p class="text-sm text-gray-400">CO₂ Economizado</p>
+</div>
+<div class="bg-bgmain p-4 rounded-xl text-center">
+<p class="text-lg font-bold text-green">R$ 3.88</p>
+<p class="text-sm text-gray-400">Economia Financeira</p>
+</div>
+</div>
+<p class="text-sm text-gray-400">
+Sua economia equivale a <span class="text-green font-semibold">3875 horas</span> de torneira fechada.
+</p>
+</div>
 
-<div class="bg-cardbg p-4 rounded-2xl space-y-4">
+<!-- CONQUISTAS -->
+<div class="bg-card p-4 rounded-2xl space-y-4">
+<h3 class="font-semibold">Conquistas</h3>
 
-<div class="flex justify-between items-center">
+<div class="bg-bgmain p-3 rounded-xl">
+<p class="font-semibold">Eco Guerreiro</p>
+<div class="w-full bg-gray-700 h-2 rounded-full mt-2">
+<div class="bg-green h-2 rounded-full" style="width:64%"></div>
+</div>
+<p class="text-xs text-gray-400 mt-1">64.2/100L</p>
+</div>
+
+<div class="bg-bgmain p-3 rounded-xl opacity-50">
+<p class="font-semibold">Mestre da Sustentabilidade</p>
+<div class="w-full bg-gray-700 h-2 rounded-full mt-2">
+<div class="bg-green h-2 rounded-full" style="width:20%"></div>
+</div>
+<p class="text-xs text-gray-400 mt-1">64.2/500L</p>
+</div>
+
+</div>
+
+</div>
+
+<!-- ================= PLANTAS ================= -->
+<div id="plantas" class="tab space-y-6">
+
+<h2 class="text-2xl font-bold">Seleção de Plantas</h2>
+
+<div class="bg-card p-4 rounded-2xl space-y-4">
+<h3 class="font-semibold">Lado Esquerdo</h3>
+<div class="bg-bgmain p-3 rounded-xl">
+<p class="font-semibold">🍅 Tomate</p>
+<p class="text-sm text-gray-400">Sol pleno • Moderada</p>
+<p class="text-green text-sm mt-1">70-80 dias</p>
+</div>
+</div>
+
+<div class="bg-card p-4 rounded-2xl space-y-4">
+<h3 class="font-semibold">Lado Direito</h3>
+<div class="bg-bgmain p-3 rounded-xl">
+<p class="font-semibold">🥬 Alface</p>
+<p class="text-sm text-gray-400">Meia-sombra • Alta</p>
+<p class="text-green text-sm mt-1">45-60 dias</p>
+</div>
+</div>
+
+</div>
+
+<!-- ================= CONFIG ================= -->
+<div id="config" class="tab space-y-6">
+
+<h2 class="text-2xl font-bold">Configurações</h2>
+
+<div class="bg-green p-4 rounded-2xl">
+<p class="font-semibold">Status do Sistema</p>
+<p class="text-sm">Todos os sensores funcionando normalmente</p>
+</div>
+
+<div class="bg-card p-4 rounded-2xl space-y-4">
+
+<div class="flex justify-between">
 <span>Modo Escuro</span>
-<input type="checkbox" checked onchange="toggleDarkMode(this)">
+<input type="checkbox" checked onchange="toggleTheme(this)">
 </div>
 
-<div class="flex justify-between items-center">
-<span>Notificações</span>
+<div class="flex justify-between">
+<span>Notificações Push</span>
 <input type="checkbox" checked>
 </div>
 
-<div class="flex justify-between items-center">
-<span>Sincronização</span>
-<input type="checkbox">
+<div class="flex justify-between">
+<span>Sincronização Automática</span>
+<input type="checkbox" checked>
 </div>
 
-<button onclick="resetar()" class="w-full bg-red-600 py-3 rounded-2xl font-semibold">
+<button class="w-full bg-red-600 py-3 rounded-xl mt-4">
 Resetar Todos os Dados
 </button>
 
@@ -143,117 +188,31 @@ Resetar Todos os Dados
 
 </div>
 
-<!-- ========================= -->
 <!-- NAVBAR -->
-<!-- ========================= -->
-<div class="fixed bottom-0 left-0 right-0 bg-cardbg border-t border-gray-700">
+<div class="fixed bottom-0 left-0 right-0 bg-card border-t border-gray-700">
 <div class="max-w-md mx-auto flex justify-around py-3 text-sm">
-<button onclick="mudarTab('home')">Horta</button>
+<button onclick="mudarTab('economia')" class="text-green">Economia</button>
 <button onclick="mudarTab('plantas')">Plantas</button>
-<button onclick="mudarTab('economia')">Economia</button>
 <button onclick="mudarTab('config')">Config</button>
 </div>
 </div>
 
 <script>
 
-// ====================
-// MOCK DATA
-// ====================
-
-const plantas = [
-{ nome:"🍅 Tomate", dificuldade:"Fácil", agua:"Alta", luz:"Alta", temp:"20-30°C", dias:90 },
-{ nome:"🥬 Alface", dificuldade:"Fácil", agua:"Média", luz:"Média", temp:"15-25°C", dias:60 },
-{ nome:"🥕 Cenoura", dificuldade:"Médio", agua:"Baixa", luz:"Alta", temp:"18-24°C", dias:80 },
-{ nome:"🌶️ Pimenta", dificuldade:"Médio", agua:"Média", luz:"Alta", temp:"22-32°C", dias:100 }
-];
-
-function renderPlantas(){
-const grid = document.getElementById("gridPlantas");
-grid.innerHTML="";
-plantas.forEach(p=>{
-grid.innerHTML+=`
-<div class="bg-cardbg p-3 rounded-2xl shadow space-y-2">
-<div class="text-lg font-semibold">${p.nome}</div>
-<span class="text-xs px-2 py-1 rounded-full ${p.dificuldade==="Fácil"?"bg-green-600":"bg-orange-500"}">${p.dificuldade}</span>
-<p class="text-xs mt-2">💧 Água: ${p.agua}</p>
-<p class="text-xs">☀️ Luz: ${p.luz}</p>
-<p class="text-xs">🌡️ Temp: ${p.temp}</p>
-<p class="text-xs">⏳ Colheita: ${p.dias} dias</p>
-</div>`;
-});
-}
-
 function mudarTab(id){
-document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
-document.getElementById(id).classList.add("active");
+document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+document.getElementById(id).classList.add('active');
 }
 
-function atualizarSensores(){
-renderSensores();
-}
-
-function renderSensores(){
-const container = document.getElementById("sensores");
-container.innerHTML="";
-["Esquerdo","Direito"].forEach(lado=>{
-const umidade = Math.floor(Math.random()*40)+50;
-const temp = Math.floor(Math.random()*10)+20;
-const luz = Math.floor(Math.random()*50)+50;
-
-container.innerHTML+=`
-<div class="bg-cardbg p-4 rounded-2xl space-y-2">
-<div class="flex justify-between">
-<span class="font-semibold">🌿 Lado ${lado}</span>
-<span>${temp}°C</span>
-</div>
-<div>
-<p class="text-xs text-gray-400">Umidade</p>
-<div class="w-full bg-gray-700 h-2 rounded-full">
-<div class="bg-primary h-2 rounded-full" style="width:${umidade}%"></div>
-</div>
-<p class="text-xs">${umidade}%</p>
-</div>
-<p class="text-xs">☀️ Luz: ${luz}%</p>
-<p class="text-xs">⏱ Última rega: ${Math.floor(Math.random()*5)+1}h atrás</p>
-</div>
-`;
-});
-}
-
-function toggleDarkMode(el){
+function toggleTheme(el){
 if(el.checked){
-document.body.classList.add("bg-darkbg","text-white");
 document.body.classList.remove("bg-white","text-black");
+document.body.classList.add("bg-bgmain","text-white");
 }else{
-document.body.classList.remove("bg-darkbg","text-white");
+document.body.classList.remove("bg-bgmain","text-white");
 document.body.classList.add("bg-white","text-black");
 }
 }
-
-function resetar(){
-if(confirm("Tem certeza que deseja apagar todos os dados?")){
-location.reload();
-}
-}
-
-// ====================
-// GRÁFICO SIMPLES
-// ====================
-
-function desenharGrafico(){
-const ctx = document.getElementById("grafico").getContext("2d");
-const data = [12,18,25,20,30,28,35];
-const width = 40;
-data.forEach((v,i)=>{
-ctx.fillStyle="#10B981";
-ctx.fillRect(i*50+10,150-v*3,width,v*3);
-});
-}
-
-renderPlantas();
-renderSensores();
-desenharGrafico();
 
 </script>
 
