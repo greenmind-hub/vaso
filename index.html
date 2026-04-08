@@ -1,290 +1,249 @@
 <!DOCTYPE html>
-<html lang="pt-br" class="dark">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GreenMind | Smart Garden Studio</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #f8fafc; overflow-x: hidden; }
-        .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.08); }
-        .tab-content { display: none; animation: fadeIn 0.3s ease-in-out; }
-        .tab-content.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .nav-btn.active { color: #10b981; }
-        .progress-fill { transition: width 0.8s ease-in-out; }
-        .toggle-dot { transition: all 0.3s ease-in-out; }
-        input:checked ~ .toggle-bg { background-color: #10b981; }
-        input:checked ~ .toggle-dot { transform: translateX(100%); }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GreenMind</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background: radial-gradient(circle at top, #0f172a, #020617);
+  color: white;
+  overflow-x: hidden;
+}
+
+/* NAVBAR */
+nav {
+  position: fixed;
+  width: 100%;
+  padding: 20px 10%;
+  display: flex;
+  justify-content: space-between;
+  backdrop-filter: blur(10px);
+  background: rgba(15, 23, 42, 0.6);
+  z-index: 1000;
+}
+
+nav h2 {
+  color: #22c55e;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
+  opacity: 0.8;
+}
+
+nav a:hover {
+  opacity: 1;
+}
+
+/* HERO */
+.hero {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 0 10%;
+}
+
+.hero-content {
+  max-width: 600px;
+}
+
+.hero h1 {
+  font-size: 3.5rem;
+  line-height: 1.2;
+}
+
+.hero span {
+  background: linear-gradient(90deg, #22c55e, #4ade80);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero p {
+  margin-top: 20px;
+  opacity: 0.7;
+}
+
+.btn {
+  margin-top: 30px;
+  display: inline-block;
+  padding: 14px 28px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #22c55e, #4ade80);
+  color: black;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+
+/* SECTIONS */
+section {
+  padding: 100px 10%;
+}
+
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+/* CARD GLASS */
+.card {
+  padding: 30px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.1);
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-10px) scale(1.02);
+}
+
+/* TITLES */
+h2 {
+  font-size: 2rem;
+}
+
+/* ANIMAÇÃO */
+.hidden {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: all 0.8s ease;
+}
+
+.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 40px;
+  opacity: 0.5;
+}
+
+/* GLOW BACKGROUND */
+.glow {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: #22c55e;
+  filter: blur(150px);
+  opacity: 0.2;
+  top: 10%;
+  right: -100px;
+}
+</style>
 </head>
-<body class="pb-28">
 
-    <header class="p-6 flex justify-between items-center sticky top-0 bg-[#0f172a]/80 backdrop-blur-md z-50">
-        <div>
-            <h1 class="text-2xl font-extrabold text-emerald-500 flex items-center gap-2">
-                <i data-lucide="leaf"></i> GreenMind
-            </h1>
-            <p id="page-title" class="text-xs text-slate-400 font-medium tracking-widest uppercase">Dashboard</p>
-        </div>
-        <div class="flex items-center gap-2 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
-            <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
-            <span class="text-[10px] font-bold text-emerald-500 uppercase tracking-tighter">Sistema Online</span>
-        </div>
-    </header>
+<body>
 
-    <main class="p-4 max-w-2xl mx-auto">
+<div class="glow"></div>
 
-        <section id="tab-horta" class="tab-content active space-y-6">
-            <div class="grid grid-cols-2 gap-4">
-                <div class="glass-card p-4 rounded-2xl">
-                    <i data-lucide="droplets" class="text-emerald-500 mb-2"></i>
-                    <p class="text-xs text-slate-400">Economia Hoje</p>
-                    <h3 class="text-2xl font-bold">2.3L</h3>
-                </div>
-                <div class="glass-card p-4 rounded-2xl border-b-2 border-blue-500 relative">
-                    <i data-lucide="thermometer" class="text-blue-400 mb-2"></i>
-                    <p class="text-xs text-slate-400">Umidade Média</p>
-                    <h3 class="text-2xl font-bold" id="avg-moisture">--%</h3>
-                </div>
-            </div>
+<nav>
+  <h2>GreenMind</h2>
+  <div>
+    <a href="#">Sobre</a>
+    <a href="#">Tecnologia</a>
+    <a href="#">Contato</a>
+  </div>
+</nav>
 
-            <div class="space-y-4">
-                <div id="card-esquerdo" class="glass-card p-5 rounded-3xl space-y-4">
-                    <div class="flex justify-between items-center text-sm font-bold border-b border-white/5 pb-2">
-                        <span id="plant-name-left">Tomate Cereja</span>
-                        <span id="plant-difficulty-left" class="text-orange-400 bg-orange-500/10 px-2 py-0.5 rounded text-[8px] uppercase font-bold">Médio</span>
-                    </div>
-                    <div class="w-full bg-slate-800 h-3 rounded-full overflow-hidden">
-                        <div id="moisture-bar-left" class="bg-emerald-500 h-full progress-fill" style="width: 78%"></div>
-                    </div>
-                    <div class="flex justify-between text-[10px] text-slate-400">
-                        <span>Solo: <b id="moisture-val-left" class="text-white">78%</b></span>
-                        <span>Temp: <b id="temp-val-left" class="text-white">24°C</b></span>
-                        <span>Luz: <b id="light-val-left" class="text-white">85%</b></span>
-                    </div>
-                </div>
+<!-- HERO -->
+<section class="hero hidden">
+  <div class="hero-content">
+    <h1>
+      O futuro do cuidado com plantas é <span>automático</span>
+    </h1>
+    <p>
+      Sensores, inteligência e sustentabilidade trabalhando juntos para cuidar das suas plantas sem esforço.
+    </p>
+    <div class="btn">Entrar na lista</div>
+  </div>
+</section>
 
-                <div id="card-direito" class="glass-card p-5 rounded-3xl space-y-4">
-                    <div class="flex justify-between items-center text-sm font-bold border-b border-white/5 pb-2">
-                        <span id="plant-name-right">Alface Crespa</span>
-                        <span id="plant-difficulty-right" class="text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded text-[8px] uppercase font-bold">Fácil</span>
-                    </div>
-                    <div class="w-full bg-slate-800 h-3 rounded-full overflow-hidden">
-                        <div id="moisture-bar-right" class="bg-orange-500 h-full progress-fill" style="width: 61%"></div>
-                    </div>
-                    <div class="flex justify-between text-[10px] text-slate-400">
-                        <span>Solo: <b id="moisture-val-right" class="text-white">61%</b></span>
-                        <span>Temp: <b id="temp-val-right" class="text-white">26°C</b></span>
-                        <button onclick="showTab('plantas')" class="bg-slate-700 text-slate-300 px-2 py-0.5 rounded font-bold">TROCAR</button>
-                    </div>
-                </div>
-            </div>
-        </section>
+<!-- PROBLEMA -->
+<section class="hidden">
+  <h2>Problemas reais do dia a dia</h2>
+  <div class="grid">
+    <div class="card">Rotina corrida impede o cuidado constante</div>
+    <div class="card">Irrigação incorreta prejudica plantas</div>
+    <div class="card">Desperdício de água invisível</div>
+  </div>
+</section>
 
-        <section id="tab-plantas" class="tab-content space-y-4">
-            <h2 class="font-bold text-slate-300 flex items-center gap-2"><i data-lucide="library" class="w-5 h-5"></i> Catálogo de Cultivo</h2>
-            <div id="plant-catalog" class="grid grid-cols-1 gap-3"></div>
-        </section>
+<!-- SOLUÇÃO -->
+<section class="hidden">
+  <h2>GreenMind resolve isso</h2>
+  <p>
+    Nosso sistema inteligente monitora, analisa e executa a irrigação no momento ideal.
+  </p>
+</section>
 
-        <section id="tab-camera" class="tab-content text-center py-10 space-y-6">
-            <div class="relative w-48 h-48 mx-auto">
-                <div class="absolute inset-0 rounded-full border-2 border-emerald-500/20 animate-ping"></div>
-                <div class="relative z-10 w-48 h-48 bg-slate-800 rounded-full flex items-center justify-center border-4 border-emerald-500/40">
-                    <i data-lucide="scan-face" class="w-20 h-20 text-emerald-500"></i>
-                </div>
-            </div>
-            <div class="space-y-2">
-                <h2 class="text-xl font-bold uppercase tracking-widest">IA Vision</h2>
-                <p class="text-xs text-slate-400 px-12 leading-relaxed">Aponte a câmera para as folhas para detectar doenças, pragas ou falta de nitrogênio em tempo real.</p>
-            </div>
-            <button class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-10 py-4 rounded-full shadow-lg shadow-emerald-900/40 transition active:scale-95">INICIAR SCANNER</button>
-        </section>
+<!-- FUNCIONAMENTO -->
+<section class="hidden">
+  <h2>Como funciona</h2>
+  <div class="grid">
+    <div class="card">Sensores captam dados em tempo real</div>
+    <div class="card">IA analisa necessidade da planta</div>
+    <div class="card">Sistema ativa irrigação automaticamente</div>
+  </div>
+</section>
 
-        <section id="tab-economia" class="tab-content space-y-6">
-            <div class="grid grid-cols-2 gap-3">
-                <div class="glass-card p-4 rounded-2xl border-l-4 border-emerald-500">
-                    <p class="text-[10px] text-slate-400 uppercase font-bold">Hoje</p>
-                    <h3 class="text-xl font-bold">2.3L</h3>
-                </div>
-                <div class="glass-card p-4 rounded-2xl border-l-4 border-blue-500">
-                    <p class="text-[10px] text-slate-400 uppercase font-bold">Total</p>
-                    <h3 class="text-xl font-bold">387.5L</h3>
-                </div>
-            </div>
-            <div class="glass-card p-5 rounded-3xl h-40 flex items-end justify-between gap-2">
-                <div class="bg-emerald-500/20 w-full h-[40%] rounded-t-lg"></div>
-                <div class="bg-emerald-500/40 w-full h-[60%] rounded-t-lg"></div>
-                <div class="bg-emerald-500 w-full h-[90%] rounded-t-lg"></div>
-                <div class="bg-emerald-500/60 w-full h-[70%] rounded-t-lg"></div>
-                <div class="bg-emerald-500 w-full h-[100%] rounded-t-lg shadow-[0_0_15px_rgba(16,185,129,0.3)]"></div>
-            </div>
-        </section>
+<!-- DIFERENCIAL -->
+<section class="hidden">
+  <h2>Diferenciais</h2>
+  <div class="grid">
+    <div class="card">🌱 Sustentável</div>
+    <div class="card">🤖 Automatizado</div>
+    <div class="card">💧 Economia de água</div>
+  </div>
+</section>
 
-        <section id="tab-config" class="tab-content space-y-6">
-            
-            <div class="space-y-3">
-                <h3 class="text-[10px] text-slate-500 uppercase font-bold tracking-[0.2em] ml-2">Preferências</h3>
-                <div class="glass-card rounded-3xl divide-y divide-white/5">
-                    <div class="p-4 flex justify-between items-center">
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400"><i data-lucide="moon" class="w-4 h-4"></i></div>
-                            <span class="text-sm font-medium">Modo Escuro</span>
-                        </div>
-                        <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" checked class="sr-only peer">
-                            <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
-                        </label>
-                    </div>
-                    <div class="p-4 flex justify-between items-center">
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-400"><i data-lucide="bell" class="w-4 h-4"></i></div>
-                            <span class="text-sm font-medium">Notificações Push</span>
-                        </div>
-                        <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" checked class="sr-only peer">
-                            <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
-                        </label>
-                    </div>
-                </div>
-            </div>
+<!-- CTA -->
+<section class="hidden">
+  <h2>Pronto para mudar sua rotina?</h2>
+  <div class="btn">Quero testar</div>
+</section>
 
-            <div class="space-y-3">
-                <h3 class="text-[10px] text-slate-500 uppercase font-bold tracking-[0.2em] ml-2">Conectividade & Automação</h3>
-                <div class="glass-card rounded-3xl divide-y divide-white/5">
-                    <div class="p-4 flex justify-between items-center">
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400"><i data-lucide="wifi" class="w-4 h-4"></i></div>
-                            <div>
-                                <p class="text-sm font-medium">Rede Wi-Fi</p>
-                                <p class="text-[10px] text-slate-500">GreenMind_Home_5G</p>
-                            </div>
-                        </div>
-                        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-600"></i>
-                    </div>
-                    <div class="p-4 flex justify-between items-center">
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400"><i data-lucide="cpu" class="w-4 h-4"></i></div>
-                            <span class="text-sm font-medium">Irrigação Automática</span>
-                        </div>
-                        <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" class="sr-only peer">
-                            <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
-                        </label>
-                    </div>
-                </div>
-            </div>
+<footer>
+  © 2026 GreenMind
+</footer>
 
-            <div class="space-y-3 pt-4">
-                <div class="glass-card rounded-3xl overflow-hidden">
-                    <button class="w-full p-4 flex items-center gap-3 hover:bg-white/5 transition border-b border-white/5">
-                        <i data-lucide="download" class="w-4 h-4 text-slate-400"></i>
-                        <span class="text-sm font-medium">Exportar Relatório (CSV)</span>
-                    </button>
-                    <button onclick="confirm('Tem certeza? Isso apagará o histórico semanal.')" class="w-full p-4 flex items-center gap-3 hover:bg-red-500/10 transition text-red-400">
-                        <i data-lucide="trash-2" class="w-4 h-4"></i>
-                        <span class="text-sm font-medium">Limpar Dados do Sensor</span>
-                    </button>
-                </div>
-                <p class="text-center text-[10px] text-slate-600 font-medium">Versão 2.4.0-Stable • Desenvolvido por GreenMind</p>
-            </div>
+<script>
+const elements = document.querySelectorAll('.hidden');
 
-        </section>
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('show');
+    }
+  });
+});
 
-    </main>
+elements.forEach(el => observer.observe(el));
+</script>
 
-    <nav class="fixed bottom-0 left-0 right-0 glass-card border-t border-white/10 px-4 py-3 flex justify-between items-center z-[100] rounded-t-[2.5rem]">
-        <button onclick="showTab('horta')" class="nav-btn active flex flex-col items-center gap-1 flex-1">
-            <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
-            <span class="text-[9px] font-bold uppercase">Horta</span>
-        </button>
-        <button onclick="showTab('plantas')" class="nav-btn flex flex-col items-center gap-1 flex-1">
-            <i data-lucide="sprout" class="w-5 h-5"></i>
-            <span class="text-[9px] font-bold uppercase">Plantas</span>
-        </button>
-        <button onclick="showTab('camera')" class="relative -top-6 bg-emerald-500 p-4 rounded-full shadow-xl shadow-emerald-500/40 text-white transition-transform active:scale-90">
-            <i data-lucide="camera" class="w-7 h-7"></i>
-        </button>
-        <button onclick="showTab('economia')" class="nav-btn flex flex-col items-center gap-1 flex-1">
-            <i data-lucide="bar-chart-big" class="w-5 h-5"></i>
-            <span class="text-[9px] font-bold uppercase">Eco</span>
-        </button>
-        <button onclick="showTab('config')" class="nav-btn flex flex-col items-center gap-1 flex-1">
-            <i data-lucide="settings-2" class="w-5 h-5"></i>
-            <span class="text-[9px] font-bold uppercase">Ajustes</span>
-        </button>
-    </nav>
-
-    <script>
-        lucide.createIcons();
-
-        // Dados das Plantas
-        const plantDB = [
-            { id: 1, name: "Tomate Cereja", difficulty: "médio", difficultyColor: "text-orange-400 bg-orange-500/10", moistureTarget: 78, temp: 24, luz: 85, icon: "🍅" },
-            { id: 2, name: "Alface Crespa", difficulty: "fácil", difficultyColor: "text-emerald-400 bg-emerald-500/10", moistureTarget: 61, temp: 26, luz: 60, icon: "🥬" },
-            { id: 3, name: "Cenoura", difficulty: "médio", difficultyColor: "text-orange-400 bg-orange-500/10", moistureTarget: 68, temp: 22, luz: 70, icon: "🥕" },
-            { id: 4, name: "Manjericão", difficulty: "fácil", difficultyColor: "text-emerald-400 bg-emerald-500/10", moistureTarget: 72, temp: 25, luz: 90, icon: "🌿" },
-            { id: 5, name: "Espinafre", difficulty: "fácil", difficultyColor: "text-emerald-400 bg-emerald-500/10", moistureTarget: 65, temp: 21, luz: 55, icon: "🍃" }
-        ];
-
-        let gardenState = { left: plantDB[0], right: plantDB[1] };
-
-        // Renderizar Catálogo
-        const catalogContainer = document.getElementById('plant-catalog');
-        plantDB.forEach(plant => {
-            const card = document.createElement('div');
-            card.className = "glass-card p-4 rounded-2xl flex items-center gap-4 transition active:bg-white/5";
-            card.innerHTML = `
-                <span class="text-3xl">${plant.icon}</span>
-                <div class="flex-1">
-                    <h4 class="font-bold">${plant.name}</h4>
-                    <p class="text-[8px] ${plant.difficultyColor} px-2 py-0.5 rounded uppercase font-bold tracking-widest inline-block">${plant.difficulty}</p>
-                </div>
-                <div class="flex gap-2">
-                    <button onclick="selectPlant(${plant.id}, 'left')" class="border border-emerald-500/30 text-emerald-400 text-[9px] font-bold px-2 py-1 rounded-lg">ESQ</button>
-                    <button onclick="selectPlant(${plant.id}, 'right')" class="border border-orange-500/30 text-orange-400 text-[9px] font-bold px-2 py-1 rounded-lg">DIR</button>
-                </div>
-            `;
-            catalogContainer.appendChild(card);
-        });
-
-        function selectPlant(plantId, side) {
-            gardenState[side] = plantDB.find(p => p.id === plantId);
-            updateGardenUI();
-            showTab('horta');
-        }
-
-        function updateGardenUI() {
-            // Update Left
-            document.getElementById('plant-name-left').innerText = gardenState.left.name;
-            document.getElementById('plant-difficulty-left').innerText = gardenState.left.difficulty;
-            document.getElementById('plant-difficulty-left').className = gardenState.left.difficultyColor + " px-2 py-0.5 rounded text-[8px] uppercase font-bold";
-            document.getElementById('moisture-val-left').innerText = gardenState.left.moistureTarget + '%';
-            document.getElementById('moisture-bar-left').style.width = gardenState.left.moistureTarget + '%';
-            
-            // Update Right
-            document.getElementById('plant-name-right').innerText = gardenState.right.name;
-            document.getElementById('plant-difficulty-right').innerText = gardenState.right.difficulty;
-            document.getElementById('plant-difficulty-right').className = gardenState.right.difficultyColor + " px-2 py-0.5 rounded text-[8px] uppercase font-bold";
-            document.getElementById('moisture-val-right').innerText = gardenState.right.moistureTarget + '%';
-            document.getElementById('moisture-bar-right').style.width = gardenState.right.moistureTarget + '%';
-
-            document.getElementById('avg-moisture').innerText = Math.floor((gardenState.left.moistureTarget + gardenState.right.moistureTarget) / 2) + '%';
-        }
-
-        function showTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.getElementById('tab-' + tabId).classList.add('active');
-            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-            const activeBtn = Array.from(document.querySelectorAll('.nav-btn')).find(btn => btn.getAttribute('onclick').includes(tabId));
-            if(activeBtn) activeBtn.classList.add('active');
-            document.getElementById('page-title').innerText = { horta: 'Dashboard', plantas: 'Biblioteca', camera: 'IA Vision', economia: 'Relatório', config: 'Ajustes' }[tabId];
-            window.scrollTo(0,0);
-        }
-
-        updateGardenUI();
-    </script>
 </body>
 </html>
