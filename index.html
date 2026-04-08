@@ -16,9 +16,8 @@
 }
 
 body {
-  background: radial-gradient(circle at top, #0f172a, #020617);
+  background: radial-gradient(circle at top, #020617, #020617);
   color: white;
-  overflow-x: hidden;
 }
 
 /* NAVBAR */
@@ -29,23 +28,12 @@ nav {
   display: flex;
   justify-content: space-between;
   backdrop-filter: blur(10px);
-  background: rgba(15, 23, 42, 0.6);
+  background: rgba(2, 6, 23, 0.6);
   z-index: 1000;
 }
 
 nav h2 {
   color: #22c55e;
-}
-
-nav a {
-  color: white;
-  text-decoration: none;
-  margin-left: 20px;
-  opacity: 0.8;
-}
-
-nav a:hover {
-  opacity: 1;
 }
 
 /* HERO */
@@ -56,19 +44,13 @@ nav a:hover {
   padding: 0 10%;
 }
 
-.hero-content {
+.hero h1 {
+  font-size: 3.5rem;
   max-width: 600px;
 }
 
-.hero h1 {
-  font-size: 3.5rem;
-  line-height: 1.2;
-}
-
 .hero span {
-  background: linear-gradient(90deg, #22c55e, #4ade80);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #22c55e;
 }
 
 .hero p {
@@ -76,20 +58,16 @@ nav a:hover {
   opacity: 0.7;
 }
 
+/* BUTTON */
 .btn {
   margin-top: 30px;
-  display: inline-block;
   padding: 14px 28px;
   border-radius: 10px;
   background: linear-gradient(90deg, #22c55e, #4ade80);
   color: black;
-  font-weight: 600;
+  border: none;
   cursor: pointer;
-  transition: 0.3s;
-}
-
-.btn:hover {
-  transform: scale(1.05);
+  font-weight: 600;
 }
 
 /* SECTIONS */
@@ -105,144 +83,167 @@ section {
   margin-top: 40px;
 }
 
-/* CARD GLASS */
+/* CARD */
 .card {
   padding: 30px;
   border-radius: 20px;
-  background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255,255,255,0.1);
-  transition: 0.3s;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(34,197,94,0.2);
 }
 
-.card:hover {
-  transform: translateY(-10px) scale(1.02);
+/* FORM */
+.form-box {
+  max-width: 700px;
+  margin: auto;
+  margin-top: 40px;
+  padding: 30px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(34,197,94,0.2);
 }
 
-/* TITLES */
-h2 {
-  font-size: 2rem;
+.form-group {
+  margin-bottom: 25px;
 }
 
-/* ANIMAÇÃO */
-.hidden {
-  opacity: 0;
-  transform: translateY(60px);
-  transition: all 0.8s ease;
+.form-group label {
+  display: block;
+  margin-bottom: 10px;
+  opacity: 0.8;
 }
 
-.show {
-  opacity: 1;
-  transform: translateY(0);
+.options {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
-/* FOOTER */
-footer {
-  text-align: center;
-  padding: 40px;
-  opacity: 0.5;
+.options button {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(34,197,94,0.3);
+  background: transparent;
+  color: white;
+  cursor: pointer;
 }
 
-/* GLOW BACKGROUND */
-.glow {
-  position: absolute;
-  width: 500px;
-  height: 500px;
+.options button.active {
   background: #22c55e;
-  filter: blur(150px);
-  opacity: 0.2;
-  top: 10%;
-  right: -100px;
+  color: black;
 }
+
+input, textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  margin-top: 5px;
+  background: rgba(255,255,255,0.05);
+  color: white;
+}
+
+/* SUCCESS */
+.success {
+  display: none;
+  margin-top: 20px;
+  color: #22c55e;
+  text-align: center;
+}
+
 </style>
 </head>
 
 <body>
 
-<div class="glow"></div>
-
 <nav>
   <h2>GreenMind</h2>
-  <div>
-    <a href="#">Sobre</a>
-    <a href="#">Tecnologia</a>
-    <a href="#">Contato</a>
-  </div>
 </nav>
 
-<!-- HERO -->
-<section class="hero hidden">
-  <div class="hero-content">
-    <h1>
-      O futuro do cuidado com plantas é <span>automático</span>
-    </h1>
-    <p>
-      Sensores, inteligência e sustentabilidade trabalhando juntos para cuidar das suas plantas sem esforço.
-    </p>
-    <div class="btn">Entrar na lista</div>
+<section class="hero">
+  <div>
+    <h1>O futuro do cuidado com plantas é <span>automático</span></h1>
+    <p>Sensores e inteligência cuidando das suas plantas por você.</p>
+    <button class="btn" onclick="scrollToForm()">Quero participar</button>
   </div>
 </section>
 
-<!-- PROBLEMA -->
-<section class="hidden">
-  <h2>Problemas reais do dia a dia</h2>
+<section>
+  <h2>Conheça a GreenMind</h2>
   <div class="grid">
-    <div class="card">Rotina corrida impede o cuidado constante</div>
-    <div class="card">Irrigação incorreta prejudica plantas</div>
-    <div class="card">Desperdício de água invisível</div>
+    <div class="card">🌱 Sensores de Umidade do Solo</div>
+    <div class="card">🧠 Inteligência Artificial</div>
+    <div class="card">⚡ Irrigação Automática</div>
   </div>
 </section>
 
-<!-- SOLUÇÃO -->
-<section class="hidden">
-  <h2>GreenMind resolve isso</h2>
-  <p>
-    Nosso sistema inteligente monitora, analisa e executa a irrigação no momento ideal.
-  </p>
-</section>
+<section id="form-section">
+  <h2 style="text-align:center;">Precisamos da sua opinião sincera</h2>
 
-<!-- FUNCIONAMENTO -->
-<section class="hidden">
-  <h2>Como funciona</h2>
-  <div class="grid">
-    <div class="card">Sensores captam dados em tempo real</div>
-    <div class="card">IA analisa necessidade da planta</div>
-    <div class="card">Sistema ativa irrigação automaticamente</div>
-  </div>
-</section>
+  <form class="form-box" action="https://formsubmit.co/contato.greenmind@gmail.com" method="POST">
 
-<!-- DIFERENCIAL -->
-<section class="hidden">
-  <h2>Diferenciais</h2>
-  <div class="grid">
-    <div class="card">🌱 Sustentável</div>
-    <div class="card">🤖 Automatizado</div>
-    <div class="card">💧 Economia de água</div>
-  </div>
-</section>
+    <input type="hidden" name="_subject" value="Nova resposta - GreenMind">
+    <input type="hidden" name="_captcha" value="false">
 
-<!-- CTA -->
-<section class="hidden">
-  <h2>Pronto para mudar sua rotina?</h2>
-  <div class="btn">Quero testar</div>
-</section>
+    <!-- Pergunta 1 -->
+    <div class="form-group">
+      <label>Você tem dificuldade para cuidar de plantas?</label>
+      <div class="options">
+        <button type="button" onclick="select(this, 'dificuldade', 'Sim')">Sim</button>
+        <button type="button" onclick="select(this, 'dificuldade', 'Às vezes')">Às vezes</button>
+        <button type="button" onclick="select(this, 'dificuldade', 'Não')">Não</button>
+      </div>
+      <input type="hidden" name="dificuldade" required>
+    </div>
 
-<footer>
-  © 2026 GreenMind
-</footer>
+    <!-- Pergunta 2 -->
+    <div class="form-group">
+      <label>Você usaria uma solução automatizada?</label>
+      <div class="options">
+        <button type="button" onclick="select(this, 'interesse', 'Com certeza')">Com certeza</button>
+        <button type="button" onclick="select(this, 'interesse', 'Talvez')">Talvez</button>
+        <button type="button" onclick="select(this, 'interesse', 'Não')">Não</button>
+      </div>
+      <input type="hidden" name="interesse" required>
+    </div>
+
+    <!-- Pergunta 3 -->
+    <div class="form-group">
+      <label>Quanto você pagaria por mês?</label>
+      <input type="text" name="preco" placeholder="Ex: R$15" required>
+    </div>
+
+    <!-- Sugestão -->
+    <div class="form-group">
+      <label>Sugestões (opcional)</label>
+      <textarea name="sugestoes"></textarea>
+    </div>
+
+    <!-- Email -->
+    <div class="form-group">
+      <label>Seu email</label>
+      <input type="email" name="email" required>
+    </div>
+
+    <button class="btn" type="submit">Enviar</button>
+
+    <div class="success">Resposta enviada com sucesso 🚀</div>
+
+  </form>
+</section>
 
 <script>
-const elements = document.querySelectorAll('.hidden');
+function select(button, name, value) {
+  const group = button.parentElement;
+  group.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+  button.classList.add('active');
 
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting){
-      entry.target.classList.add('show');
-    }
-  });
-});
+  group.parentElement.querySelector('input').value = value;
+}
 
-elements.forEach(el => observer.observe(el));
+function scrollToForm() {
+  document.getElementById("form-section").scrollIntoView({ behavior: "smooth" });
+}
 </script>
 
 </body>
