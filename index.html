@@ -16,7 +16,7 @@
 }
 
 body {
-  background: radial-gradient(circle at top, #020617, #020617);
+  background: #020617;
   color: white;
 }
 
@@ -41,12 +41,17 @@ nav h2 {
   height: 100vh;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 0 10%;
+}
+
+.hero-text {
+  max-width: 600px;
 }
 
 .hero h1 {
   font-size: 3.5rem;
-  max-width: 600px;
+  line-height: 1.2;
 }
 
 .hero span {
@@ -56,6 +61,11 @@ nav h2 {
 .hero p {
   margin-top: 20px;
   opacity: 0.7;
+}
+
+.hero img {
+  width: 400px;
+  border-radius: 20px;
 }
 
 /* BUTTON */
@@ -75,20 +85,38 @@ section {
   padding: 100px 10%;
 }
 
-/* GRID */
-.grid {
+/* PROBLEMA */
+.problem {
+  text-align: center;
+}
+
+.problem h2 {
+  font-size: 2.5rem;
+}
+
+.problem p {
+  margin-top: 10px;
+  opacity: 0.7;
+}
+
+.problem-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 30px;
-  margin-top: 40px;
+  margin-top: 50px;
 }
 
-/* CARD */
-.card {
+.problem-card {
   padding: 30px;
   border-radius: 20px;
-  background: rgba(255,255,255,0.04);
+  background: rgba(255,255,255,0.03);
   border: 1px solid rgba(34,197,94,0.2);
+  text-align: left;
+}
+
+.problem-card h3 {
+  margin-bottom: 10px;
+  color: #22c55e;
 }
 
 /* FORM */
@@ -106,16 +134,9 @@ section {
   margin-bottom: 25px;
 }
 
-.form-group label {
-  display: block;
-  margin-bottom: 10px;
-  opacity: 0.8;
-}
-
 .options {
   display: flex;
   gap: 10px;
-  flex-wrap: wrap;
 }
 
 .options button {
@@ -142,15 +163,6 @@ input, textarea {
   background: rgba(255,255,255,0.05);
   color: white;
 }
-
-/* SUCCESS */
-.success {
-  display: none;
-  margin-top: 20px;
-  color: #22c55e;
-  text-align: center;
-}
-
 </style>
 </head>
 
@@ -160,89 +172,109 @@ input, textarea {
   <h2>GreenMind</h2>
 </nav>
 
+<!-- HERO -->
 <section class="hero">
-  <div>
-    <h1>O futuro do cuidado com plantas é <span>automático</span></h1>
-    <p>Sensores e inteligência cuidando das suas plantas por você.</p>
-    <button class="btn" onclick="scrollToForm()">Quero participar</button>
+  <div class="hero-text">
+    <h1>
+      Cultive plantas <span>sem esforço</span>.<br>
+      A tecnologia cuida do seu jardim.
+    </h1>
+    <p>
+      Sensores inteligentes e IA mantendo suas plantas saudáveis automaticamente.
+    </p>
+    <button class="btn" onclick="scrollToForm()">Responder Pesquisa</button>
+  </div>
+
+  <img src="https://images.unsplash.com/photo-1586201375761-83865001e31c" />
+</section>
+
+<!-- PROBLEMA -->
+<section class="problem">
+  <h2>O Problema</h2>
+  <p>Cuidar de plantas não deveria ser um trabalho em tempo integral</p>
+
+  <div class="problem-grid">
+
+    <div class="problem-card">
+      <h3>Falta de Tempo</h3>
+      <p>
+        Entre o trabalho e a correria, suas plantas são sempre esquecidas. 
+        Você perde o horário de regar e elas sofrem.
+      </p>
+    </div>
+
+    <div class="problem-card">
+      <h3>Plantas Sempre Morrendo</h3>
+      <p>
+        Você já tentou de tudo, mas sempre termina igual. 
+        Frustração e sensação de que jardinagem não é pra você.
+      </p>
+    </div>
+
+    <div class="problem-card">
+      <h3>Sem Saber o Que Fazer</h3>
+      <p>
+        Cada planta exige algo diferente. Informações confusas tornam tudo mais difícil.
+      </p>
+    </div>
+
   </div>
 </section>
 
-<section>
-  <h2>Conheça a GreenMind</h2>
-  <div class="grid">
-    <div class="card">🌱 Sensores de Umidade do Solo</div>
-    <div class="card">🧠 Inteligência Artificial</div>
-    <div class="card">⚡ Irrigação Automática</div>
-  </div>
-</section>
-
+<!-- FORM -->
 <section id="form-section">
-  <h2 style="text-align:center;">Precisamos da sua opinião sincera</h2>
+  <h2 style="text-align:center;">Precisamos da sua opinião</h2>
 
   <form class="form-box" action="https://formsubmit.co/contato.greenmind@gmail.com" method="POST">
 
     <input type="hidden" name="_subject" value="Nova resposta - GreenMind">
     <input type="hidden" name="_captcha" value="false">
 
-    <!-- Pergunta 1 -->
     <div class="form-group">
-      <label>Você tem dificuldade para cuidar de plantas?</label>
+      <label>Dificuldade com plantas?</label>
       <div class="options">
-        <button type="button" onclick="select(this, 'dificuldade', 'Sim')">Sim</button>
-        <button type="button" onclick="select(this, 'dificuldade', 'Às vezes')">Às vezes</button>
-        <button type="button" onclick="select(this, 'dificuldade', 'Não')">Não</button>
+        <button type="button" onclick="select(this,'dificuldade','Sim')">Sim</button>
+        <button type="button" onclick="select(this,'dificuldade','Às vezes')">Às vezes</button>
+        <button type="button" onclick="select(this,'dificuldade','Não')">Não</button>
       </div>
       <input type="hidden" name="dificuldade" required>
     </div>
 
-    <!-- Pergunta 2 -->
     <div class="form-group">
-      <label>Você usaria uma solução automatizada?</label>
+      <label>Usaria automação?</label>
       <div class="options">
-        <button type="button" onclick="select(this, 'interesse', 'Com certeza')">Com certeza</button>
-        <button type="button" onclick="select(this, 'interesse', 'Talvez')">Talvez</button>
-        <button type="button" onclick="select(this, 'interesse', 'Não')">Não</button>
+        <button type="button" onclick="select(this,'interesse','Sim')">Sim</button>
+        <button type="button" onclick="select(this,'interesse','Talvez')">Talvez</button>
+        <button type="button" onclick="select(this,'interesse','Não')">Não</button>
       </div>
       <input type="hidden" name="interesse" required>
     </div>
 
-    <!-- Pergunta 3 -->
     <div class="form-group">
-      <label>Quanto você pagaria por mês?</label>
-      <input type="text" name="preco" placeholder="Ex: R$15" required>
+      <label>Quanto pagaria?</label>
+      <input type="text" name="preco" placeholder="Ex: R$15">
     </div>
 
-    <!-- Sugestão -->
     <div class="form-group">
-      <label>Sugestões (opcional)</label>
-      <textarea name="sugestoes"></textarea>
-    </div>
-
-    <!-- Email -->
-    <div class="form-group">
-      <label>Seu email</label>
+      <label>Email</label>
       <input type="email" name="email" required>
     </div>
 
-    <button class="btn" type="submit">Enviar</button>
-
-    <div class="success">Resposta enviada com sucesso 🚀</div>
+    <button class="btn">Enviar</button>
 
   </form>
 </section>
 
 <script>
-function select(button, name, value) {
-  const group = button.parentElement;
-  group.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
-  button.classList.add('active');
-
+function select(btn, name, value){
+  const group = btn.parentElement;
+  group.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
   group.parentElement.querySelector('input').value = value;
 }
 
-function scrollToForm() {
-  document.getElementById("form-section").scrollIntoView({ behavior: "smooth" });
+function scrollToForm(){
+  document.getElementById("form-section").scrollIntoView({behavior: "smooth"});
 }
 </script>
 
